@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath() + '/'}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
+    <!-- Reset Stylesheet -->
+    <link rel="stylesheet" href="resources/css/reset.css" type="text/css"
+          media="screen" />
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css"
+          media="screen" />
+    <link rel="stylesheet" href="resources/css/invalid.css" type="text/css"
+          media="screen" />
+    <!--layui-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.all.js"></script>
+    <!--                       Javascripts                       -->
+    <!-- jQuery -->
+    <script type="text/javascript"
+            src="resources/scripts/jquery-1.8.3.min.js"></script>
+    <!-- jQuery Configuration -->
+    <!--<script type="text/javascript"
+            src="resources/scripts/simpla.jquery.configuration.js"></script>-->
+    <script type="text/javascript" src="commons/shopback_utis.js"></script>
+</head>
+<body>
+<div id="main-content">
+    <div class="content-box">
+        <!-- End .content-box-header -->
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <table>
+                    <thead>
+                    <tr>
+                        <th><input class="check-all" type="checkbox" /></th>
+                        <th>商品id</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>商品价格</th>
+                        <th>商品描述</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="good :${page.records}">
+                        <td><input type="checkbox" /></td>
+                        <td th:text="${good.id}"></td>
+                        <td th:text="${good.gname}"></td>
+                        <td>
+                            <div th:if="${#strings.listSplit(good.gimages,'|').size()>0}">
+                                <img width="150" height="100" th:src="|${imgPath}${#strings.listSplit(good.gimages,'|')[0]}|" alt="">
+                            </div>
+                        </td>
+                        <td th:text="${good.gprice}"></td>
+                        <td th:text="${good.ginfo}"></td>
+                        <td>
+                            <a th:onclick="|deleGoods('goods/delete/${good.id}')|">删除</a>
+                           <!-- <a th:href="|goods/toUpdate/${good.id}|">修改</a>-->
+                            <a th:onclick="|updateGoods('goods/toUpdate/${good.id}')|">修改</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <div class="bulk-actions align-left">
+                                <a class="mybutton" href="/back/goodsadd">添加商品</a>
+                            </div>
+
+                            <!-- 分页
+                            <div class="pagination">
+                                <a href="#" title="First Page">&laquo; First</a><a href="#"
+                                                                                   title="Previous Page">&laquo; Previous</a> <a href="#"
+                                                                                                                                 class="number" title="1">1</a> <a href="#" class="number"
+                                                                                                                                                                   title="2">2</a> <a href="#" class="number current" title="3">3</a>
+                                <a href="#" class="number" title="4">4</a> <a href="#"  title="Next Page">Next &raquo;</a><a href="#"
+                                                                                                                   title="Last Page">Last &raquo;</a>
+                            </div> --><!-- End .pagination -->
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- End .content-box-content -->
+    </div>
+</div>
+<!-- End #main-content -->
+<div th:include="common/page.html :: page_div"></div>
+<script>
+    function deleGoods(url){
+        layer.confirm('确认要删除吗？', function (index) {
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.get(url,"",function(data){
+                //showMessage(data);
+                location.reload();
+            },"json");
+        });
+    }
+
+    function updateGoods(url){
+        layer.open({
+            type: 2,
+            area: [1050+'px', 560 +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            title: "修改商品",
+            content: url,
+            scrollbar: false,
+            end: function () {
+                location.reload()
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

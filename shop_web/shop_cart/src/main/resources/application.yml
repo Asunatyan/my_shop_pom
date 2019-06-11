@@ -1,0 +1,14 @@
+server:
+  port: 8085
+dubbo:
+  application:
+    name: shop_cart
+    qos-port: 33333
+  registry:
+    address: zookeeper://192.168.87.128:2181
+  consumer:
+    check: false
+    timeout: 60000
+spring:
+  redis:
+    host: 192.168.87.128

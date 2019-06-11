@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath() + '/'}"/>
+    <meta charset="UTF-8">
+    <title>忘记密码</title>
+
+    <script src="js/jquery.js"></script>
+    <script>
+
+        function getPassWord() {
+            var username = $("#username").val();
+            if (username.trim() == "" || username ==null) {
+                alert("用户名不能为空~")
+            }
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "sso/sendForgetMail",//url
+                data: {"username": username},
+                success: function (data) {
+                    if (data.status == 200) {
+                        //邮件发送成功！
+                        $("#span_id").html("找回密码的邮件已经发送到您的" + data.data.replaceEmail + "邮箱，<br/><a href='" + data.data.tomail + "' target='_blank'>去邮箱</a>！");
+                    }else {
+                        alert(data.message);
+                    }
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <h1>忘记密码</h1>
+    <input id="username" type="text" placeholder="请输入账号"/><span id="span_id" style="color: green"></span><br/>
+    <button onclick="getPassWord();" type="button">找回密码</button>
+</body>
+</html>

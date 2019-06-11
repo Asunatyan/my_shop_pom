@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="page_div">
+    <!--  1.引入样式文件 -->
+    <link rel="stylesheet" href="lib/layer/ui/css/layui.css" media="all">
+    <!-- 2.引入js文件 -->
+    <script src="lib/layer/ui/layui.js"></script>
+
+
+    <div class="text-c">
+        <div class="row cl ">
+            <!-- 这个div专门用来 显示分页导航条-->
+            <div id="test1" class="row cl "></div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化的分页导航条
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            laypage.render({
+                elem: 'test1' // 显示分页导航条元素的id
+                , count: "[[${page.total}]]" // 总条数
+                , limit: "[[${page.size}]]" // 每页显示5条
+                , limits: [2, 5, 10, 20] // 每页显示5条
+                , curr: "[[${page.current}]]" // 当前页
+                , layout: ['prev', 'page', 'next', 'limit', 'count']// 布局
+                , jump: function (obj, first) { //
+                    if (!first) {
+                        /*debugger
+                        var temp = "";
+                        /!*这是一个数组对象*!/
+                        var jsonArray = $("#selectForm").serializeArray();
+
+                        /!*转成json字符串*!/
+                        for (var i = 0; i < jsonArray.length; i++) {
+                            temp += "&"+jsonArray[i].name+"="+jsonArray[i].value
+                        }
+                        location.href="\${\url\}currentPage="+obj.curr+"&pageSize="+obj.limit+temp
+
+                        */
+
+                        location.href = "[[${url}]]current=" + obj.curr + "&size=" + obj.limit; //UserServlet/getUserPage
+                    }
+                }
+            });
+        });
+    </script>
+</div>

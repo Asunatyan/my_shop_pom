@@ -1,0 +1,19 @@
+server:
+  port: 8084
+spring:
+  thymeleaf:
+    cache: false
+  mail:
+    host: smtp.qq.com
+    username: 254497414@qq.com
+    password: hejwhlnoylzdbjde
+  redis:
+    host: 192.168.87.128
+dubbo:
+  application:
+    name: shop_sso
+  consumer:
+    check: false
+  registry:
+    address: zookeeper://192.168.87.128:2181
+    timeout: 60000

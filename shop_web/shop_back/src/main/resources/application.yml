@@ -1,0 +1,35 @@
+spring:
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 50000010240
+
+dubbo:
+  application:
+    name: shop_back
+  registry:
+    address: zookeeper://192.168.87.128:2181
+  consumer:
+    check: false
+##配置重试 - 容错机制
+fdfs:
+  tracker-list:
+    - 192.168.87.128:22122
+  connect-timeout: 10000
+  #读取时间
+  so-timeout: 10000
+  thumb-image:
+    height: 100
+    width: 100
+  pool:
+    jmx-enabled: false
+#图片服务器的地址
+imgs:
+  service: http://192.168.87.128/
+
+
+#spring boot 日志 root是一个key 所以就没有提示
+logging:
+  level:
+    root: info

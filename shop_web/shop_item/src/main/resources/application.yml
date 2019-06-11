@@ -1,0 +1,17 @@
+server:
+  port: 8083
+dubbo:
+  application:
+    name: shop_item
+  registry:
+    address: zookeeper://192.168.87.128:2181
+  consumer:
+    check: false
+    timeout: 60000
+spring:
+  rabbitmq:
+    addresses: 192.168.87.128
+    username: admin
+    password: admin
+    port: 5672
+    virtual-host: /admin
